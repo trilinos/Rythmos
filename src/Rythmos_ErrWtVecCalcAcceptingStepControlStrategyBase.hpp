@@ -26,13 +26,37 @@
 // ***********************************************************************
 //@HEADER
 
-#include "Rythmos_ConfigDefs.h"
-#include "Rythmos_Version.h"
+
+#ifndef RYTHMOS_ERR_WT_VEC_CALC_ACCEPTING_STEP_CONTROL_STRATEGY_BASE_HPP
+#define RYTHMOS_ERR_WT_VEC_CALC_ACCEPTING_STEP_CONTROL_STRATEGY_BASE_HPP
+
+
+#include "Rythmos_StepControlStrategyBase.hpp"
+#include "Rythmos_ErrWtVecCalcBase.hpp"
 
 namespace Rythmos {
 
-	std::string Rythmos_Version() { 
-		return("Rythmos Version 2.0 - September 2007"); 
-	}
+/** \brief Mix-in interface for step control strategy objects that accept an
+ * external error weight calculation and WRMS norm.
+ *
+ * ToDo: Finish documentation!
+ */
+
+template<class Scalar>
+class ErrWtVecCalcAcceptingStepControlStrategyBase
+  : virtual public StepControlStrategyBase<Scalar>
+{
+public:
+
+  /** \brief . */
+  virtual void setErrWtVecCalc(const RCP<ErrWtVecCalcBase<Scalar> >& errWtVecCalc) = 0;
+
+  /** \brief . */
+  virtual RCP<const ErrWtVecCalcBase<Scalar> > getErrWtVecCalc() const = 0;
+
+};
 
 } // namespace Rythmos
+
+
+#endif // RYTHMOS_ERR_WT_VEC_CALC_ACCEPTING_STEP_CONTROL_STRATEGY_BASE_HPP

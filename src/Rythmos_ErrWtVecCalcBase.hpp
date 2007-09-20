@@ -26,13 +26,38 @@
 // ***********************************************************************
 //@HEADER
 
-#include "Rythmos_ConfigDefs.h"
-#include "Rythmos_Version.h"
+
+#ifndef RYTHMOS_ERR_WT_VEC_CALC_BASE_HPP
+#define RYTHMOS_ERR_WT_VEC_CALC_BASE_HPP
+
+
+#include "Thyra_VectorBase.hpp"
+#include "Teuchos_RCP.hpp"
+#include "Teuchos_VerboseObject.hpp"
+#include "Teuchos_ParameterListAcceptor.hpp"
+#include "Teuchos_Describable.hpp"
 
 namespace Rythmos {
 
-	std::string Rythmos_Version() { 
-		return("Rythmos Version 2.0 - September 2007"); 
-	}
+template<class Scalar>
+class ErrWtVecCalcBase
+  : virtual public Teuchos::Describable
+  , virtual public Teuchos::ParameterListAcceptor
+  , virtual public Teuchos::VerboseObject<ErrWtVecCalcBase<Scalar> >
+{
+public:
+
+  /** \brief . */
+  virtual void errWtVecSet(
+       Thyra::VectorBase<Scalar>* weight 
+      ,const Thyra::VectorBase<Scalar>& vector
+      ,Scalar relTol
+      ,Scalar absTol
+      ) const = 0;
+
+};
 
 } // namespace Rythmos
+
+
+#endif // RYTHMOS_ERR_WT_VEC_CALC_BASE_HPP

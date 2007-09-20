@@ -26,13 +26,41 @@
 // ***********************************************************************
 //@HEADER
 
-#include "Rythmos_ConfigDefs.h"
-#include "Rythmos_Version.h"
+#ifndef Rythmos_BREAK_POINT_INFORMER_H
+#define Rythmos_BREAK_POINT_INFORMER_H
 
 namespace Rythmos {
 
-	std::string Rythmos_Version() { 
-		return("Rythmos Version 2.0 - September 2007"); 
-	}
+/** \brief Interface for using breakpoints.   */
+template<class Scalar>
+class BreakPointInformerBase 
+  : virtual public Teuchos::Describable
+  , virtual public Teuchos::ParameterListAcceptor
+  , virtual public Teuchos::VerboseObject<BreakPointInformerBase<Scalar> >
+{
+  public:
+    /** \brief Basic breakpoint interface. 
+     *
+     *  Returns true if there is a breakpoint between time0 and time0+dt
+     *
+     */ 
+    virtual bool testForBreakPoint(Scalar& time0, Scalar& dt) const =0;
+
+    /** \brief Get next break point. 
+     *
+     *  Returns the next breakpoint after time0.
+     *
+     */
+    virtual Scalar getNextBreakPoint(Scalar& time0) const =0;
+
+    /** \brief Remove breakpoint from list. 
+     *
+     *  Removes the next breakpoint after time0.
+     */
+    virtual void removeNextBreakPoint(Scalar& time0) =0;
+
+};
 
 } // namespace Rythmos
+
+#endif //Rythmos_BREAK_POINT_INFORMER_H

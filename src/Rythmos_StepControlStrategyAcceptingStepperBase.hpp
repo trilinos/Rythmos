@@ -26,13 +26,46 @@
 // ***********************************************************************
 //@HEADER
 
-#include "Rythmos_ConfigDefs.h"
-#include "Rythmos_Version.h"
+
+#ifndef RYTHMOS_STEP_CONTROL_STRATEGY_ACCEPTING_STEPPER_BASE_HPP
+#define RYTHMOS_STEP_CONTROL_STRATEGY_ACCEPTING_STEPPER_BASE_HPP
+
+
+#include "Rythmos_StepperBase.hpp"
+#include "Rythmos_StepControlStrategyBase.hpp"
 
 namespace Rythmos {
 
-	std::string Rythmos_Version() { 
-		return("Rythmos Version 2.0 - September 2007"); 
-	}
+
+/** \brief Mix-in interface for stepper objects that accept a
+ * step control strategy object to be used for evaluating steps and picking
+ * step-sizes & orders.
+ *
+ * ToDo: Finish documentation!
+ */
+
+template<class Scalar>
+class StepControlStrategyAcceptingStepperBase : virtual public StepperBase<Scalar>
+{
+public:
+
+  /** \brief . */
+  virtual void setStepControlStrategy(
+      const Teuchos::RCP<StepControlStrategyBase<Scalar> >& stepControlStrategy
+      ) = 0;
+
+  /** \brief . */
+  virtual Teuchos::RCP<StepControlStrategyBase<Scalar> > 
+    getNonconstStepControlStrategy() = 0;
+
+  /** \brief . */
+  virtual Teuchos::RCP<const StepControlStrategyBase<Scalar> > 
+    getStepControlStrategy() const = 0;
+
+};
+
 
 } // namespace Rythmos
+
+
+#endif // RYTHMOS_STEP_CONTROL_STRATEGY_ACCEPTING_STEPPER_BASE_HPP
